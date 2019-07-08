@@ -1,15 +1,15 @@
 :root{
     --skyBlue:#87CEEB;
-    --dark-purple:rgb(4, 143, 96);
-    --dark-blue:rgb(20, 82, 51);
-    --dark:#1a8f97;
+    --dark-purple:rgb(230, 73, 170);
+    --dark-blue:rgb(63, 177, 206);
+    --dark:#86d6db;
     --bordeaux:rgb(123, 16, 173);
     --purple:rgb(226, 1, 246);
     --rose:#FE00EA;
     --deep-rose:#FF0279;
     --deep-red:rgb(22, 202, 202);
-    --light-blue:#4F6A9B;
-    --dark-rose:#055286;
+    --light-blue:rgb(151, 176, 223);
+    --dark-rose:#860586;
     --secondary-green:#61F2A0;
   }
 
@@ -18,7 +18,7 @@
 }
 
 body {
-    background-color:  #F0FFFF;
+    background-image: linear-gradient(#FFB6C1, #B8FFF4);
 }
 
 img { 
@@ -38,14 +38,14 @@ img {
   h1, h2, h4 {
     display: inline;
     color: white;
-  }
+}
 
   .container-fluid {
     padding: 0;
   }
   
   .navbar {
-    background: linear-gradient(0.05turn, #00000000, rgba(0,0,0,0.8));;
+    background: linear-gradient(0.05turn, #00000000, rgba(0,0,0,0.8));
     position: sticky;
     top: 0;
     right: 0;
@@ -437,6 +437,15 @@ img {
 
     .nav-masthead {
       float: right;
+    }
+
+    .jumbotron {
+      background: linear-gradient(0.05turn, #00000000, rgba(0,0,0,0.8));
+    }
+
+    .jumbotron-fluid {
+      background: linear-gradient(0.05turn, #00000000, rgba(0,0,0,0.8));
+      
     }
   /* .justify-content-center {
       /* -ms-flex-pack: center!important;

@@ -25,15 +25,17 @@ mysqli_select_db($con, "E_shopping");
 mysqli_query($con, "CREATE TABLE categories (id INT PRIMARY KEY AUTO_INCREMENT, nom VARCHAR(250));");
     
 //table pour les produits
-mysqli_query($con, "CREATE TABLE produits (id INT PRIMARY KEY AUTO_INCREMENT, nom VARCHAR(250), id_cat INT, FOREIGN KEY (id_cat) REFERENCES categories(id), prix INT NOT NULL, details VARCHAR(100));");
+mysqli_query($con, "CREATE TABLE produits (id INT PRIMARY KEY AUTO_INCREMENT, nom VARCHAR(250), prix INT NOT NULL, details VARCHAR(100), selected INT, img BLOB NOT NULL);");
 
+//table produits_categorie
+mysqli_query($con, "CREATE TABLE produits_commande (id_prod INT, FOREIGN KEY (id_prod) REFERENCES produits(id), id_cat INT, FOREIGN KEY (id_cat) REFERENCES categories(id));");
 //table utilisateurs
 mysqli_query($con, "CREATE TABLE users (id INT PRIMARY KEY AUTO_INCREMENT, nom VARCHAR(250), prenom VARCHAR(250), mail VARCHAR(250), mdp VARCHAR(250));");
 
 //table pour les commandes
-mysqli_query($con, "CREATE TABLE commandes (id INT PRIMARY KEY AUTO_INCREMENT, id_user INT, FOREIGN KEY (id_user) REFERENCES users(id), prix_total INT);");
+mysqli_query($con, "CREATE TABLE commandes (id INT PRIMARY KEY AUTO_INCREMENT, prix_total INT);");
 
-//table produits_pour_commande
-mysqli_query($con, "CREATE TABLE produits_pour_commande (id_produit INT, FOREIGN KEY (id_produit) REFERENCES produits(id), id_commande INT, FOREIGN KEY id_commande REFERENCES commandes(id));");
+//table user_commande
+mysqli_query($con, "CREATE TABLE user_commande (id_user INT, FOREIGN KEY (id_user) REFERENCES users(id), id_commande INT, FOREIGN KEY (id_commande) REFERENCES commandes(id));");
 
 
