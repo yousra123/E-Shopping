@@ -107,6 +107,9 @@
                                     <li style="padding-top: 20%;">
                                         <a class="btn" href="index.php">Accueil</a>
                                     </li>
+                                    <li style="padding-top: 20%;">
+                                        <a class="btn" href="admin_connecte.php?connected=1">Espace Admin</a>
+                                    </li>
                             </div>
                         </div>
                     </div>     

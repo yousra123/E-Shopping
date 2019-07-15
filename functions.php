@@ -102,7 +102,6 @@ function ProdCat($id_cat, $id_prod) {
     $stmt = mysqli_prepare($con, "INSERT INTO produits_commande (id_prod, id_cat) VALUES (?, ?)");
     mysqli_stmt_bind_param($stmt, 'ii', $id_prod, $id_cat);
     mysqli_stmt_execute($stmt); 
-    var_dump($stmt);
     mysqli_close($con);
 }
 
@@ -231,9 +230,16 @@ function commandeId($id_user, $prix) {
 //fonction qui supprime une catégorie en utilisant son id
 function deleteCat($id) {
     $con = con();
-    $stmt = mysqli_prepare($con, "DELETE FROM `produits` WHERE id_cat = ?;");
+    $produits = produits($id);
+    //var_dump($produits);
+    $stmt = mysqli_prepare($con, "DELETE FROM `produits_commande` WHERE id_cat = ?;");
     mysqli_stmt_bind_param($stmt, 'i', $id);
     mysqli_stmt_execute($stmt);
+    foreach ($produits as $prod){
+        $stmt = mysqli_prepare($con, "DELETE FROM `produits` WHERE id = ?;");
+        mysqli_stmt_bind_param($stmt, 'i', $prod["id"]);
+        mysqli_stmt_execute($stmt);
+    }
     $query = mysqli_prepare($con, "DELETE FROM `categories` WHERE id = ?;");
     mysqli_stmt_bind_param($query, 'i', $id);
     mysqli_stmt_execute($query);
@@ -295,5 +301,67 @@ function getCatFromProd($id) {
     mysqli_free_result($res);
     mysqli_close($con);
     return $assoc;
+}
+
+//fonction qui effectue le transfert d'image
+function transfert(){
+        $ret        = false;
+        $img_blob   = '';
+        $img_taille = 0;
+        $img_type   = '';
+        $img_nom    = '';
+        $taille_max = 250000;
+        $ret        = is_uploaded_file($_FILES['fic']['tmp_name']);
+        
+        if (!$ret) {
+            echo "Problème de transfert";
+        } else {
+            $img_taille = $_FILES['fic']['size'];
+            $img_type = $_FILES['fic']['type'];
+            $img_nom  = $_FILES['fic']['name'];
+            $img_blob = file_get_contents ($_FILES['fic']['tmp_name']);
+            $cnx = con();          
+            $ret = mysqli_prepare($cnx, "INSERT INTO images (img_nom, img_blob) VALUES (?, ?);");           
+            mysqli_stmt_bind_param($ret, 'ss', $img_nom, $img_blob);
+            mysqli_stmt_execute($ret);
+            mysqli_close($cnx);
+        }
+    }
+
+//fonction qui crée le lien entre l'image et le produit correspondant
+function ImgProd($id_prod) {
+    $con = con();
+    $query = mysqli_query($con, "SELECT max(id) FROM images");
+    $id_img = mysqli_fetch_assoc($query);
+    //var_dump($id_com);
+    mysqli_free_result($query);
+    $stmt = mysqli_prepare($con, "INSERT INTO produit_image (id_img, id_prod) VALUES (?, ?)");
+    mysqli_stmt_bind_param($stmt, 'ii', $id_img["max(id)"], $id_prod);
+    var_dump($id_prod);
+    var_dump($id_img);
+    mysqli_stmt_execute($stmt);
+    //var_dump($stmt);
+    mysqli_close($con);
+} 
+
+//fonction qui retourne l'identifiant de l'image correspondante à un produit
+function ImgId($id_prod) {
+    $con = con();
+    $query = mysqli_query($con, "SELECT id_img FROM produit_image WHERE id_prod = $id_prod");
+    $assoc = mysqli_fetch_assoc($query);
+    mysqli_free_result($query);
+    mysqli_close($con);
+    return $assoc;
+}
+
+//fonction qui retourne le champ img_blob d'une image donnée
+function getImage($id) {
+    $con = con();
+    $query = mysqli_query($con, "SELECT img_blob FROM images WHERE id = $id;");
+    $res = mysqli_fetch_assoc($query);
+    mysqli_free_result($query);
+    mysqli_close($con);
+    return $res;
+
 }
 ?>

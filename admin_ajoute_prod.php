@@ -17,7 +17,7 @@
         <p class="lead"><center>Veuillez spécifier les caractéristiques du nouveau produit que vous voulez ajouter en remplissant le formulaire ci-dessous :</center></p>
     </div>
     
-    <form class="container" style="padding-top: 5%; padding-left: 20%;" method="POST" action="admin_produit_ajoute.php">
+    <form class="container" enctype="multipart/form-data" style="padding-top: 5%; padding-left: 20%;" method="POST" action="admin_produit_ajoute.php">
         <div class="form-row ">
             <div class="form-group col-md-6">
             <!-- <label for="produit">Nom</label> -->
@@ -42,7 +42,12 @@
                 }
                 ?>
             </select>
-        
+            
+         <div style="padding-top: 2%;">
+        <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
+        <input type="file" name="fic" size=50 />
+         <!-- <input type="submit" value="Envoyer" /> -->
+        </div> 
         <div class="form-group" style ="padding-top: 1.5%;">
             <!--  <label for="descr">Description</label> -->
             <textarea class="form-control" id="descr" rows="3" name="details" placeholder="Entrer des détails du nouveau produit"></textarea>

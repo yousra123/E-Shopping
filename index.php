@@ -2,6 +2,7 @@
     Include("head.php");
     Include("navbar.php");
     ?>
+
     <body >
 
 
@@ -10,7 +11,7 @@
     ?>
         <div class="container">
         <?php
-            $com = 0;
+
             $categories = categories();
             foreach ($categories as $cat){?>                
                 <?php      
@@ -23,16 +24,18 @@
                         <h2><?php echo $nom; ?></h2>
                     </div>
                 </div>
+                <div style="display: inline;">
                 <?php
                 foreach ($id_produits as $id_p) {
-                    /* var_dump($id_p);
-                    echo "</br>"; */
-                    $produit = details_produit($id_p["id_prod"]);?>
+                    $produit = details_produit($id_p["id_prod"]);
+                    $id_img = ImgId($id_p["id_prod"])["id_img"];
+                     ?>
                     <div class="row">
                     <div class="col align-middle">
                     <div class="text-left ml-lg-5 mr-0 card-receive mt-3 text-light w-auto">
-                        <h4><center><?php echo $produit["nom"] ?></center></h4>
-                        <img src="img2.jpeg" class="card-img-top float-right" alt="..." style="width: 10%; height: 10%; ">
+                        <h4><center><?php echo $produit["nom"]; ?></center></h4>
+                        <?php $data = getImage($id_img); ?>
+                        <img src="data:<?php echo $data["Type"]; ?>;base64,<?php echo base64_encode($data["img_blob"]); ?>" width="50" alt="" >
                         <h5 class="float"><center><?php echo $produit["details"] ?></center></h5><br>
                         <div class="mt-3 money">
                             <h2><?php echo $produit["prix"] ?> Dhs</h2>
@@ -52,7 +55,8 @@
             }
             
         ?> 
-       </div>           
+       </div> 
+       </div>          
     </body>
 </html>
 

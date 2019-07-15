@@ -108,8 +108,8 @@ if(isset($_POST["submit"])) {
         echo "</br>";
         ajouteUtilis($inputMail, $inputPassword, $inputName1, $inputName);
         $_SESSION["connecte"] = "connecte";
-        //$_SESSION["id"] = getIdFromMail($inputMail);
-        //header("Location:facture.php");
+        $_SESSION["id"] = getIdFromMail($inputMail);
+        header("Location:facture.php");
 
     }
 }

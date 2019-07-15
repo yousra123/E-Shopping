@@ -38,4 +38,10 @@ mysqli_query($con, "CREATE TABLE commandes (id INT PRIMARY KEY AUTO_INCREMENT, p
 //table user_commande
 mysqli_query($con, "CREATE TABLE user_commande (id_user INT, FOREIGN KEY (id_user) REFERENCES users(id), id_commande INT, FOREIGN KEY (id_commande) REFERENCES commandes(id));");
 
+//table pour les images
+mysqli_query($con,"CREATE TABLE `images` (`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT, `img_nom` VARCHAR(50) NOT NULL,`img_blob` BLOB NOT NULL);");
+
+//table produits_image
+mysqli_query($con, "CREATE TABLE produit_image (id_img INT, FOREIGN KEY (id_img) REFERENCES images(id), id_prod INT, FOREIGN KEY (id_prod) REFERENCES produits(id));");
+
 
